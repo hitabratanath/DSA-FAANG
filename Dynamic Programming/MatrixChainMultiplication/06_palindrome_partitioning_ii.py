@@ -27,36 +27,21 @@ Note: This is the same as problem 02_palindrome_partitioning.py but included sep
 """
 
 def min_cut(s):
-    n = len(s)
-    dp = [[-1] * n for _ in range(n)]
-    dp_palindrome = [[-1] * n for _ in range(n)]
-
-    def is_palindrome(n, m):
-        if dp_palindrome[n][m] != -1: return dp_palindrome[n][m]
-        N, M = n, m
-        while n <= m:
-            if s[n] != s[m]:
-                dp_palindrome[n][m] = False
-                return False
-            n += 1
-            m -= 1
-        
-        dp_palindrome[N][M] = True
+    def is_palindrome(i, j):
+        while i < j:
+            if s[i] != s[j]: return False
+            i += 1
+            j -= 1
         return True
-
+    
     def solve(i, j):
         if i >= j: return 0
-
-        if is_palindrome(i, j): return 0
-
-        if dp[i][j] != -1: return dp[i][j]
+        if is_palindrome(i, j):
+            return 0
 
         ans = float('inf')
         for k in range(i, j):
-            left = solve(i, k)
-            right = solve(k + 1, j)
-            temp_ans = left + right + 1
-            ans = min(ans, temp_ans)
-        dp[i][j] = ans
-        return dp[i][j]
-    return solve(0, n - 1)
+            ans = min(ans, 1 + solve(i, k) + solve(k + 1, j))
+        return ans
+    
+    return solve(0, len(s) - 1)

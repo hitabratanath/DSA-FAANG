@@ -30,17 +30,17 @@ Constraints:
 def matrix_chain_multiplication(arr):
     n = len(arr)
     dp = [[-1] * n for _ in range(n)]
+
     def solve(i, j):
-        if i >= j:
-            return 0
+        if i >= j: return 0
         if dp[i][j] != -1: return dp[i][j]
+
         ans = float('inf')
         for k in range(i, j):
-            left = solve(i, k)
-            right = solve(k + 1, j)
-            temp_ans = left + right + arr[i - 1] * arr[k] * arr[j]
-            ans = min(temp_ans, ans)
+            cost = arr[i - 1] * arr[k] * arr[j]
+            ans = min(ans, cost + solve(i, k) + solve(k + 1, j))
+            
         dp[i][j] = ans
-        return dp[i][j]
-    
+        return ans
+
     return solve(1, n - 1)

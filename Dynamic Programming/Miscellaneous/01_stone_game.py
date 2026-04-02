@@ -29,8 +29,21 @@ Constraints:
 - sum(piles[i]) is odd.
 """
 
-from functools import lru_cache
-
 def stone_game(piles):
-    pass
+    n = len(piles)
+    dp = [[-1] * n for _ in range(n)]
+    def solve(i, j):
+        if i > j: return 0
+        if dp[i][j] != -1: return dp[i][j]
+        even = (j - i) % 2 != 0
+        left = piles[i] if even else 0
+        right = piles[j] if even else 0
+
+        dp[i][j] = max(solve(i + 1, j) + left, solve(i, j - 1) + right)
+        return dp[i][j]
+    
+    alice = solve(0, n - 1)
+    total = sum(piles)
+    bob = total - alice
+    return alice > bob
 

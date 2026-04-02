@@ -24,16 +24,18 @@ Constraints:
 """
 
 def max_coins(nums):
+    dp = [[-1] * n for _ in range(n)]
     def solve(i, j):
-        if i > j: return 0
+        if i > j:
+            return 0
+        if dp[i][j] != -1: return dp[i][j]
 
         ans = float('-inf')
         for k in range(i, j + 1):
-            left = solve(i, k - 1)
-            right = solve(k + 1, j)
-            temp_ans = nums[i - 1] * nums[k] * nums[j + 1] + left + right
-            ans = max(ans, temp_ans)
-        return ans
-    
+            ans = max(ans, solve(i, k - 1) + solve(k + 1, j) + nums[i - 1] * nums[k] * nums[j + 1])
+        dp[i][j] = ans
+        return ans 
+
     nums = [1] + nums + [1]
-    return solve(1, len(nums) - 2)
+    n = len(nums)
+    return solve(1, n - 2)

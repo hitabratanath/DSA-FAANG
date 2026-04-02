@@ -32,37 +32,34 @@ Constraints:
 """
 
 def count_ways_to_evaluate_true(s):
-    dp = {}
     def solve(i, j, is_true):
         if i == j:
             if is_true:
                 return 1 if s[i] == 'T' else 0
-            else:
+            else: 
                 return 1 if s[i] == 'F' else 0
-        key = (i, j, is_true)
-        if key in dp: return dp[key]
+        
         ans = 0
         for k in range(i + 1, j, 2):
-            left_true = solve(i, k - 1, True)
-            left_false = solve(i, k - 1, False)
+            left_true = solve(i, k, True)
+            left_false = solve(i, k, False)
             right_true = solve(k + 1, j, True)
             right_false = solve(k + 1, j, False)
+
             if is_true:
                 if s[k] == '&':
-                    temp_ans = left_true * right_true
+                    ans += left_true * right_true
                 elif s[k] == '|':
-                    temp_ans = left_true * right_false + left_false * right_true + left_true * right_true
+                    ans += left_true * right_true + left_true * right_false + left_false * right_true
                 else:
-                    temp_ans = left_true * right_false + left_false * right_true
+                    ans += left_true * right_false + left_false * right_true
             else:
                 if s[k] == '&':
-                    temp_ans = left_false * right_false + left_true * right_false + left_false * right_true
+                    ans += left_true * right_false + left_false * right_true + left_false * right_false
                 elif s[k] == '|':
-                    temp_ans = left_false * right_false
+                    ans += left_false * right_false
                 else:
-                    temp_ans = left_true * right_true + left_false * right_false
-            ans += temp_ans
-        dp[key] = ans
+                    ans += left_true * right_true + left_false * right_false
         return ans
     
     return solve(0, len(s) - 1, True)

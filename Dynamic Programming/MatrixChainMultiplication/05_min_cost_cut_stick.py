@@ -30,15 +30,11 @@ def min_cost(n, cuts):
     def solve(i, j):
         if i > j: return 0
 
-        min_cost = float('inf')
+        ans = float('inf')
         for k in range(i, j + 1):
-            left = solve(i, k - 1)
-            right = solve(k + 1, j)
-            temp_ans = cuts[j + 1] - cuts[i - 1] + left + right
-            min_cost = min(min_cost, temp_ans)
-        
-        return min_cost
-    
-    cuts.sort()
+            ans = min(ans, cuts[j + 1] - cuts[i - 1] + solve(i, k - 1) + solve(k + 1, j))
+        return ans
+
+    cuts = sorted(cuts)
     cuts = [0] + cuts + [n]
     return solve(1, len(cuts) - 2)

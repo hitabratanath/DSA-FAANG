@@ -35,18 +35,10 @@ def min_score_triangulation(values):
     dp = [[-1] * n for _ in range(n)]
     def solve(i, j):
         if j - i < 2: return 0
-        if j - i == 2:
-            dp[i][j] = values[i] * values[i + 1] * values[j]
-            return dp[i][j]
-
+        if dp[i][j] != -1: return dp[i][j]
         ans = float('inf')
         for k in range(i + 1, j):
-            cost = values[i] * values[k] * values[j]
-            left = solve(i, k)
-            right = solve(k, j)
-            ans = min(ans, cost + left + right)
-        
+            ans = min(ans, values[i] * values[k] * values[j] + solve(i, k) + solve(k, j))
         dp[i][j] = ans
         return ans
-    
     return solve(0, n - 1)

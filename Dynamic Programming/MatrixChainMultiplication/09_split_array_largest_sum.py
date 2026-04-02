@@ -31,14 +31,10 @@ Constraints:
 def split_array(nums, p):
     def solve(i, j, p):
         if p == 1: return sum(nums[i: j + 1])
-
-        ans = float('inf')
-        for k in range(i, j - p + 2):
-            left = sum(nums[i: k + 1])
-            right = solve(k + 1, j, p - 1)
-            temp_ans = max(left,  right)
-            ans = min(ans, temp_ans)
         
+        ans = float('inf')
+        for k in range(i + 1, j + 1):
+            ans = min(ans, max(sum(nums[i: k]), solve(k, j, p - 1)))
         return ans
     
     return solve(0, len(nums) - 1, p)

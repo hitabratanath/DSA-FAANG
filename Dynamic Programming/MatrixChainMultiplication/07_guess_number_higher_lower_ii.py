@@ -36,18 +36,13 @@ Constraints:
 """
 
 
-# 1 2 3
-
 def get_money_amount(n):
-    dp = [[-1] * (n + 1) for _ in range(n + 1)]
-
     def solve(i, j):
         if i >= j: return 0
-        if dp[i][j] != -1: return dp[i][j]
+
         ans = float('inf')
         for k in range(i, j + 1):
             ans = min(ans, k + max(solve(i, k - 1), solve(k + 1, j)))
-        dp[i][j] = ans
         return ans
-            
+    
     return solve(1, n)

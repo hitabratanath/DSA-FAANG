@@ -33,37 +33,27 @@ Constraints:
 """
 
 def scramble_string(a, b):
-    if a == b: return True
-    if sorted(a) != sorted(b): return False
     if len(a) != len(b): return False
+    if sorted(a) != sorted(b): return False
+    if a == b: return True
 
-    memo = {}
     def solve(x, y):
-        if (x, y) in memo: return memo[(x, y)]
         if len(x) == 1:
-            memo[(x, y)] =  x == y
-            return memo[(x, y)]
+            return x == y
         
         if x == y:
-            memo[(x, y)] = True
             return True
-
+        
         for k in range(1, len(x)):
             # without swap
-            if solve(x[:k], y[:k]) and solve(x[k:], y[k:]):
-                memo[(x, y)] = True
+            if solve(x[: k], y[: k]) and solve(x[k:], y[k:]):
                 return True
             
             # with swap
-            if solve(x[:k], y[len(y) - k:]) and solve(x[k:], y[:len(y) - k]):
-                memo[(x, y)] = True
+            if solve(x[: k], y[len(y) - k: ]) and solve(x[k:], y[: len(y) - k]):
                 return True
             
-        memo[(x, y)] = False    
         return False
-    
-    return solve(a, b)
-                        
+                
 
-        
-
+    return solve(a, b) 
