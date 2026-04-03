@@ -22,4 +22,15 @@ Space Complexity: O(n)
 """
 
 def merge(intervals):
-    pass
+    if len(intervals) < 2: return intervals
+
+    intervals.sort()
+    stk = [intervals[0]]
+    for curr_start, curr_end in intervals[1:]:
+        prev_start, prev_end = stk.pop()
+        if curr_start >= prev_start and curr_start <= prev_end:
+            stk.append([prev_start, max(prev_end, curr_end)])
+        else:
+            stk.append([prev_start, prev_end])
+            stk.append([curr_start, curr_end])
+    return stk

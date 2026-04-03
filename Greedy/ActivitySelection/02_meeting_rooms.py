@@ -21,4 +21,11 @@ Space Complexity: O(1)
 """
 
 def can_attend_meetings(intervals):
-    pass
+    if len(intervals) < 2: return True
+
+    intervals.sort()
+    end = intervals[0][1]
+    for a, b in intervals[1:]:
+        if a < end: return False
+        end = b
+    return True

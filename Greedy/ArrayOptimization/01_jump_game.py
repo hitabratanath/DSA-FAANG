@@ -23,4 +23,10 @@ Space Complexity: O(1)
 """
 
 def can_jump(nums):
-    pass
+    max_jump_so_far = 0
+    for i, num in enumerate(nums):
+        if i > max_jump_so_far: return False
+        max_jump_so_far = max(max_jump_so_far, num + i)
+        if max_jump_so_far >= len(nums) - 1: return True
+
+    return True
