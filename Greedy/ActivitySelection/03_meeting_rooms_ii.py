@@ -23,4 +23,22 @@ Space Complexity: O(n)
 """
 
 def min_meeting_rooms(intervals):
-    pass
+    start, end = [], []
+    for interval in intervals:
+        start.append(interval[0])
+        end.append(interval[1])
+    start = sorted(start)
+    end = sorted(end)
+
+    count, max_count = 0, 0
+    i, j = 0, 0
+
+    while i < len(start):
+        if start[i] < end[j]:
+            count += 1
+            max_count = max(max_count, count)
+            i += 1
+        else:
+            count -= 1
+            j += 1
+    return max_count

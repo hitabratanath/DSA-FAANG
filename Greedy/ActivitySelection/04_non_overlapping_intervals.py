@@ -26,5 +26,25 @@ Time Complexity: O(n log n)
 Space Complexity: O(1)
 """
 
+'''
+[[1,2],[1,3],[2,3],[3,4]]
+'''
+
 def erase_overlap_intervals(intervals):
-    pass
+    if len(intervals) == 1: return 0
+
+    intervals.sort()
+    stk = [intervals[0]]
+    count = 0
+    for curr_start, curr_end in intervals[1:]:
+        prev_start, prev_end = stk[-1]
+        if curr_start >= prev_start and curr_start < prev_end:
+            count += 1
+            if curr_end < prev_end:
+                stk.pop()
+                stk.append([curr_start, curr_end])
+
+        else:
+            stk.append([curr_start, curr_end])
+    
+    return count

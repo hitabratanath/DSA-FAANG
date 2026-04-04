@@ -25,6 +25,28 @@ Constraints:
 Time Complexity: O(n)
 Space Complexity: O(1)
 """
-
 def partition_labels(s):
-    pass
+    mp = {}
+
+    for idx, c in enumerate(s):
+        if c in mp:
+            mp[c][1] = idx
+        else:
+            mp[c] = [idx, idx]
+
+    intervals = sorted(list(mp.values()))
+
+    stk = [intervals[0]]
+    for curr_start, curr_end in intervals[1:]:
+        prev_start, prev_end = stk[-1]
+        if curr_start >= prev_start and curr_start <= prev_end:
+            stk.pop()
+            stk.append([prev_start, max(prev_end, curr_end)])
+        else:
+            stk.append([curr_start, curr_end])
+
+    result = []
+    for interval in stk:
+        result.append(interval[1] - interval[0] + 1)
+
+    return result    
