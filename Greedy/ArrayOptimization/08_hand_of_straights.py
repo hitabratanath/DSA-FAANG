@@ -24,19 +24,5 @@ Note: This question is the same as 1296: https://leetcode.com/problems/divide-ar
 Time Complexity: O(n log n)
 Space Complexity: O(n)
 """
-from collections import Counter
 def is_n_straight_hand(hand, groupSize):
-    if len(hand) % groupSize != 0: return False
-
-    hand = sorted(hand)
-    counter = Counter(hand)
-
-    i = 0
-    while i < len(hand):
-        for j in range(groupSize):
-            if counter[hand[i] + j] == 0: return False
-            counter[hand[i] + j] -= 1
-            if counter[hand[i] + j] == 0: del counter[hand[i] + j]
-        while i < len(hand) and hand[i] not in counter:
-            i += 1
-    return True
+    pass

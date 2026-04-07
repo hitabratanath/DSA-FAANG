@@ -20,6 +20,26 @@ Constraints:
 
 Time Complexity: O(n log n)
 Space Complexity: O(n)
+
+
+1---2     4----------------11
+      3------5  7----9
+          4-------8
+
+arr =   1 3 4 4 7
+          i
+dep =   2 5 8 9 11
+        j
+
+        if arr[i] < dep[j]
+            platform += 1
+            max_platform = max(max_platform, platform)
+            i += 1
+        else:
+            platform -= 1
+            j += 1
+
+
 """
 
 def min_meeting_rooms(intervals):
