@@ -1,8 +1,12 @@
 # Array Optimization - Solutions Template
 from collections import Counter
-def jump_game_solution():
+def jump_game_solution(nums):
     """Jump Game Solutions"""
-    pass
+    farthest = 0
+    for i in range(len(nums)):
+        if farthest < i: return False
+        farthest = max(farthest, i + nums[i])
+    return True
 
 def jump_game_ii_solution(nums):
     """Jump Game II Solutions"""

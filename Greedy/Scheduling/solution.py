@@ -23,7 +23,7 @@ def job_sequencing_solution(jobs):
             profit += jobs[i][2]
     return profit
 
-def task_scheduler_solution(tasks):
+def task_scheduler_solution(tasks, n):
     """Task Scheduler Solutions"""
     counter = Counter(tasks)
     heap = [-cnt for cnt in counter.values()]

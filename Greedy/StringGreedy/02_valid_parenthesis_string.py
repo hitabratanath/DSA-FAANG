@@ -29,19 +29,5 @@ Space Complexity: O(1)
 """
 
 def check_valid_string(s):
-    min_count, max_count = 0, 0
-    for c in s:
-        if c == '(':
-            min_count += 1
-            max_count += 1
-        elif c == ')':
-            min_count = max(min_count - 1, 0)
-            max_count -= 1
-        else:
-            min_count = max(min_count - 1, 0)
-            max_count += 1
-        if max_count < 0:
-            return False
-        
-    return min_count == 0
+    pass
 
